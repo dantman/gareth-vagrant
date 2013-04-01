@@ -120,7 +120,7 @@ class gareth(
 		'gareth-createuser':
 			cwd => $core_dir,
 			command => "${core_dir}/manage.py createuser -a admin vagrant",
-			unless  => "mysql gareth -B -e \"SELECT username FROM garethweb_user WHERE username = 'admin' LIMIT 1;\" | grep admin";
+			unless  => "mysql --defaults-file=/home/vagrant/.my.cnf gareth -B -e \"SELECT username FROM garethweb_user WHERE username = 'admin' LIMIT 1;\" | grep admin";
 	
 		'set-default-database':
 			command => "echo 'database = \"${dbname}\"' >> /home/vagrant/.my.cnf",
