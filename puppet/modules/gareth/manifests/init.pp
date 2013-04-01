@@ -12,6 +12,7 @@ class gareth(
 	include python
 	include supervisor
 	include nginx
+	include apollo
 
 	file {
 		# Ensure the /var/lib directories Gareth is installed in and configured in exist

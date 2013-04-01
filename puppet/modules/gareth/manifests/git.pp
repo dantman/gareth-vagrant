@@ -23,6 +23,14 @@ class gareth::git(
 		url    => $repository,
 	}
 
-	File['/vagrant/gareth'] -> Package['git'] -> Gitclone['clone-gareth']
+	exec { 'gareth-vendor-submodule':
+		cwd     => '/vagrant',
+		command => "git submodule update --init vendor/",
+		onlyif  => "git submodule status vendor/ | grep '+\\|-'",
+	}
+
+	File['/vagrant/gareth'] -> Package['git']
+	Package['git'] -> Gitclone['clone-gareth']
+	Package['git'] -> Exec['gareth-vendor-submodule']
 
 }

@@ -30,9 +30,9 @@ DATABASES = {
 }
 
 # Setup the message queue system
-# STOMP = {
-# 	'hosts': [('localhost', 61613)],
-# 	'user': 'admin',
-# 	'pass': 'password',
-# 	'version': 1.1,
-# }
+STOMP = {
+	'hosts': [('localhost', 61613)],
+	'user': 'admin',
+	'pass': 'vagrant',
+	'version': 1.1,
+}
