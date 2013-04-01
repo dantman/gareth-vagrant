@@ -16,12 +16,6 @@ class gareth::git(
 		group  => 'vagrant',
 	}
 
-	# exec { 'clone-gareth':
-	# 	creates => '/vagrant/gareth/.git',
-	# 	command => "git clone --branch ${branch} --origin ${origin} ${repository} /vagrant/gareth",
-	# 	logoutput => true,
-	# }
-
 	gitclone { 'clone-gareth':
 		path   => '/vagrant/gareth',
 		branch => $branch,
