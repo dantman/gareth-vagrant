@@ -63,4 +63,11 @@ Vagrant.configure("2") do |config|
 		].join(' ')
 	end
 
+	# Restart the taskrunner from a provisioner. For some reason it looks like supervisord
+	# starts the taskrunner before shared folders are setup. At which point things fail since
+	# ./manage.py is not available on the system yet.
+	config.vm.provision :shell do |s|
+		s.inline = 'sudo supervisorctl restart taskrunner'
+	end
+
 end
