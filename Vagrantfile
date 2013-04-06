@@ -2,6 +2,26 @@
 # vi: set ft=ruby :
 require File.join(File.dirname(__FILE__), 'lib/cpucount.rb')
 
+# Check if we're running on Windows.
+def windows?
+	RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/
+end
+
+# Get VirtualBox's version string by capturing the output of 'VBoxManage -v'.
+# Returns empty string if unable to determine version.
+def get_virtualbox_version
+	begin
+		if windows?
+			ver = `"%ProgramFiles%\\Oracle\\VirtualBox\\VBoxManage" -v 2>NULL`
+		else
+			ver = `VBoxManage -v 2>/dev/null`
+		end
+	rescue
+		ver = ''
+	end
+	ver.gsub(/r.*/m, '')
+end
+
 # Vagrant config
 Vagrant.configure("2") do |config|
 
@@ -71,6 +91,12 @@ Vagrant.configure("2") do |config|
 			# May require some extra tweaks to function
 			# '--graph',
 		].join(' ')
+
+        # Include VirtualBox's version in facter
+        puppet.facter = {
+            'virtualbox_version' => get_virtualbox_version
+        }
+
 	end
 
 	# Restart the taskrunner from a provisioner. For some reason it looks like supervisord

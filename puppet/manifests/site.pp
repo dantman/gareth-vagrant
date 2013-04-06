@@ -19,6 +19,10 @@ exec { 'update-package-index':
 	unless  => 'bash -c \'(( $(date +%s) - $(stat -c %Y /var/lib/apt/periodic/update-success-stamp) < 86400 ))\''
 }
 
+package { 'build-essential':
+	ensure => present,
+}
+
 package { [ 'virtualbox-guest-dkms', 'virtualbox-guest-utils' ]:
 	ensure => present,
 }

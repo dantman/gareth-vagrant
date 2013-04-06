@@ -4,7 +4,6 @@ class gareth::python {
 		'python',
 		'python-dev',
 		'python-pip',
-		'build-essential',
 		'libevent-dev',
 		'libmysqlclient-dev'
 	]:
