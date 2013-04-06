@@ -5,6 +5,11 @@ class gareth::git(
 	$branch = 'master',
 ) {
 
+	exec { 'add-git-core-ppa':
+		command => 'add-apt-repository --yes ppa:git-core/ppa && apt-get update',
+		creates => '/etc/apt/sources.list.d/git-core-ppa-precise.list',
+	}
+
 	package { 'git':
 		ensure => latest,
 	}
@@ -30,6 +35,7 @@ class gareth::git(
 	}
 
 	File['/vagrant/gareth'] -> Package['git']
+	Exec['add-git-core-ppa'] -> Package['git']
 	Package['git'] -> Gitclone['clone-gareth']
 	Package['git'] -> Exec['gareth-vendor-submodule']
 
