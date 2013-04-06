@@ -13,6 +13,7 @@ class gareth(
 	include supervisor
 	include nginx
 	include apollo
+	include sass
 
 	file {
 		# Ensure the /var/lib directories Gareth is installed in and configured in exist
@@ -88,6 +89,14 @@ class gareth(
 			mode    => '0664',
 			group   => 'vagrant',
 			source  => 'puppet:///modules/gareth/supervisor.conf';
+
+		# Include a Gemrc file to speed up gem installations by disabling doc generation
+		'/etc/gemrc':
+			ensure  => 'file',
+			owner   => 'root',
+			mode    => '0664',
+			group   => 'root',
+			source  => 'puppet:///modules/gareth/gemrc';
 	}
 
 	# Gareth config file holding SECRET_KEY
