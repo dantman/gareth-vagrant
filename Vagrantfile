@@ -1,5 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+require File.join(File.dirname(__FILE__), 'lib/cpucount.rb')
 
 # Vagrant config
 Vagrant.configure("2") do |config|
@@ -40,6 +41,13 @@ Vagrant.configure("2") do |config|
 		group: 'www-data',
 		extra: 'dmode=775,fmode=775',
 		create: true
+
+	config.vm.provider :virtualbox do |v|
+		# See http://www.virtualbox.org/manual/ch08.html for additional options.
+		v.customize ['modifyvm', :id, '--ostype', 'Ubuntu_64']
+		# Use however many cpus are available on the host
+		v.customize ["modifyvm", :id, '--cpus', Cpu.count.to_s]
+	end
 
 	# Silence 'stdin: is not a tty' error on Puppet run
 	config.vm.provision :shell do |s|
