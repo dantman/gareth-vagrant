@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Print "Gareth" in ASCII art
+toilet -f ascii12 Gareth
+
+# Output useful information
+printf " * Gareth is located at \033[33;1m/var/lib/gareth/core\033[0m.\n"
+printf " * For a database shell, run '\033[33mmysql\033[0m'.\n"
+printf " * To manage Apollo, Gunicorn, and Gareth taskrunner daemons, run '\033[33msudo supervisorctl\033[0m'.\n"
+printf "\n"
+printf "   \033[34;4mhttp://gareth-review.com/\033[0m\n"
+printf "   \033[34;4mhttps://github.com/dantman/gareth\033[0m\n"
+printf "   \033[34;4mhttps://github.com/dantman/gareth-vagrant\033[0m\n"
+printf "\n"
+
+# @todo Consider using some state to limit how often we do the actual fetch
+OLD_PWD="$PWD"
+cd '/vagrant'
+git fetch -q https://github.com/dantman/gareth-vagrant.git master
+GIT_HEAD="$(git rev-parse HEAD)"
+GIT_FETCH_HEAD="$(git rev-parse FETCH_HEAD)"
+
+if [ $GIT_HEAD != $GIT_FETCH_HEAD ]
+then
+	printf "Your copy of the gareth-vagrant repo is out of date.\n"
+	git log HEAD..FETCH_HEAD --oneline --graph --color -n 10
+	printf "\n"
+fi
+
+cd "$OLD_PWD"
+
+# Output the landscape system information but skip the link 
+/usr/bin/landscape-sysinfo --exclude-sysinfo-plugins=LandscapeLink
