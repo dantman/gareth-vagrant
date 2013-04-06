@@ -79,18 +79,22 @@ Vagrant.configure("2") do |config|
 		puppet.module_path = 'puppet/modules'
 		puppet.manifests_path = 'puppet/manifests'
 		puppet.manifest_file = 'site.pp'
-		puppet.options = [
-			'--verbose',
-			# Output a LOT of grey debug lines detailing what puppet is doing 
-			# '--debug',
-			# Output traces when there's an error in puppet code
-			# (eg: When our custom Gitclone type is broken ;) )
-			# '--trace',
-			# Generate .dot files on puppet relationships inside:
-			# /var/lib/puppet/state/graphs
-			# May require some extra tweaks to function
-			# '--graph',
-		].join(' ')
+		puppet.options = '--verbose'
+
+		# Output a LOT of grey debug lines detailing what puppet is doing 
+		# puppet.options << ' --debug',
+
+		# Output traces when there's an error in puppet code
+		# (eg: When our custom Gitclone type is broken ;) )
+		# puppet.options << ' --trace',
+
+		# Generate .dot files on puppet relationships inside:
+		# /var/lib/puppet/state/graphs
+		# May require some extra tweaks to function
+		# puppet.options << ' --graph',
+
+        # Windows's Command Prompt has poor support for ANSI escape sequences.
+        puppet.options << ' --color=false' if windows?
 
         # Include VirtualBox's version in facter
         puppet.facter = {
