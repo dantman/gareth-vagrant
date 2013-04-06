@@ -22,7 +22,7 @@ class gareth::python {
 		'pytz',
 		'pygments',
 		'diff-match-patch',
-		'stomp.py',
+		'stompest',
 
 		# Support for MySQL
 		'mysql-python'
@@ -68,7 +68,7 @@ class gareth::python {
 	Package['pytz'] -> Exec['dummy-gareth-packages']
 	Package['pygments'] -> Exec['dummy-gareth-packages']
 	Package['diff-match-patch'] -> Exec['dummy-gareth-packages']
-	Package['stomp.py'] -> Exec['dummy-gareth-packages']
+	Package['stompest'] -> Exec['dummy-gareth-packages']
 	Package['mysql-python'] -> Exec['dummy-gareth-packages']
 
 }
