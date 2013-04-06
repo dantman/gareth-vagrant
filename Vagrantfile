@@ -27,6 +27,7 @@ Vagrant.configure("2") do |config|
 	# If we ever make gareth function properly as more of a library we'll move
 	# it to perhaps /usr/local/lib/gareth or maybe a python path?
 	config.vm.synced_folder "gareth", "/var/lib/gareth/core",
+		id: 'gareth',
 		owner: 'vagrant',
 		group: 'vagrant',
 		extra: 'dmode=775,fmode=775',
@@ -34,6 +35,7 @@ Vagrant.configure("2") do |config|
 
 	# Repos are in /var
 	config.vm.synced_folder "repos", "/var/lib/gareth/repos",
+		id: 'repos',
 		owner: 'www-data',
 		group: 'www-data',
 		extra: 'dmode=775,fmode=775',
