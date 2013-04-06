@@ -32,6 +32,8 @@ class gareth::git(
 		cwd     => '/vagrant',
 		command => "git submodule update --init vendor/",
 		onlyif  => "git submodule status vendor/ | grep '+\\|-'",
+		timeout => 0,
+		logoutput => true,
 	}
 
 	File['/vagrant/gareth'] -> Package['git']
